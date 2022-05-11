@@ -5,18 +5,50 @@
         public static string FirstStar(string[] inputLines)
         {
             var inputNumbers = inputLines.Select(Int32.Parse).ToArray();
+            return FindNumbersWithSum(inputNumbers, 2020, 2).ToString();
+        }
 
-            for (int i = 0; i < inputNumbers.Length; i++)
+        public static string SecondStar(string[] inputLines)
+        {
+            var inputNumbers = inputLines.Select(Int32.Parse).ToArray();
+            return FindNumbersWithSum(inputNumbers, 2020, 3).ToString();
+        }
+
+        private static int FindNumbersWithSum(int[] numbers, int desiredSum, uint numberOfSumElements)
+        {
+            var indices = new uint[numberOfSumElements];
+            for (uint i = 0; i < indices.Length; i++)
+                indices[i] = i;
+
+            do
             {
-                for (int j = i + 1; j < inputNumbers.Length; j++)
+                if (indices.Select(index => numbers[index]).Sum() == desiredSum)
                 {
-                    if (inputNumbers[i] + inputNumbers[j] == 2020)
+                    return indices.Select(index => numbers[index]).Aggregate((a, b) => a * b);
+                }
+
+                indices[^1]++;
+
+                for (int i = indices.Length - 1; i >= 1; i--)
+                {
+                    if (indices[i] == numbers.Length - (indices.Length - i))
                     {
-                        return (inputNumbers[i] * inputNumbers[j]).ToString();
+                        indices[i - 1]++;
+                    }
+                }
+
+                for (int i = 1; i < indices.Length; i++)
+                {
+                    if (indices[i] == numbers.Length - (indices.Length - i))
+                    {
+                        indices[i] = indices[i - 1] + 1;
                     }
                 }
             }
-            throw new Exception("There is not a pair of entries that sum to 2020.");
+            while (indices[0] < numbers.Length - indices.Length + 1);
+
+            throw new Exception($"There are no {numberOfSumElements} numbers with sum of {desiredSum}.");
         }
+
     }
 }
