@@ -2,4 +2,4 @@
 
 string[] inputLines = System.IO.File.ReadAllLines($"{AppDomain.CurrentDomain.BaseDirectory}/InputDay02.txt");
 
-Console.WriteLine(Day02.FirstStar(inputLines));
+Console.WriteLine(Day02.SecondStar(inputLines));
