@@ -1,20 +1,20 @@
 ﻿namespace AdventOfCode2020
 { 
-    static class Day01
+    class Day01 : IDay
     {
-        public static string FirstStar(string[] inputLines)
+        public string FirstStar(string[] inputLines)
         {
             var inputNumbers = inputLines.Select(Int32.Parse).ToArray();
             return FindNumbersWithSum(inputNumbers, 2020, 2).ToString();
         }
 
-        public static string SecondStar(string[] inputLines)
+        public string SecondStar(string[] inputLines)
         {
             var inputNumbers = inputLines.Select(Int32.Parse).ToArray();
             return FindNumbersWithSum(inputNumbers, 2020, 3).ToString();
         }
 
-        private static int FindNumbersWithSum(int[] numbers, int desiredSum, uint numberOfSumElements)
+        private int FindNumbersWithSum(int[] numbers, int desiredSum, uint numberOfSumElements)
         {
             var indices = new uint[numberOfSumElements];
             for (uint i = 0; i < indices.Length; i++)

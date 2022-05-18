@@ -44,9 +44,9 @@ public class PositionPasswordPolicy : PasswordPolicy
     }
 }
 
-static class Day02
+class Day02 : IDay
 {
-    public static string FirstStar(string[] inputLines)
+    public string FirstStar(string[] inputLines)
     {
         uint numberOfCompliantPasswords = 0;
         foreach (var line in inputLines)
@@ -61,7 +61,7 @@ static class Day02
         return numberOfCompliantPasswords.ToString();
     }
 
-    public static string SecondStar(string[] inputLines)
+    public string SecondStar(string[] inputLines)
     {
         uint numberOfCompliantPasswords = 0;
         foreach (var line in inputLines)
