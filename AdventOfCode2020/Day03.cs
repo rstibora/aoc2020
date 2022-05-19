@@ -51,24 +51,33 @@
             return groundPlan;
         }
 
+        int[] treesForSlopes((int, int)[] slopes, Foliage[,] groundPlan)
+        {
+            var treeCounts = new int[slopes.Length];
+            for (int i = 0; i < slopes.Length; i++)
+            {
+                WrapAround2DIndex index = new WrapAround2DIndex(groundPlan.GetLength(0), groundPlan.GetLength(1));
+
+                for (int y = 0; y < groundPlan.GetLength(1); y += slopes[i].Item2)
+                {
+                    if (groundPlan[index.X, index.Y] == Foliage.Tree)
+                        treeCounts[i]++;
+                    index.shift(slopes[i].Item1, slopes[i].Item2);
+                }
+            }
+            return treeCounts;
+        }
+
         public string FirstStar(string[] inputLines)
         {
             var groundPlan = parseGroundPlan(inputLines);
-            WrapAround2DIndex index = new WrapAround2DIndex(groundPlan.GetLength(0), groundPlan.GetLength(1));
-
-            int numOfTrees = 0;
-            for (int y = 0; y < inputLines.Length; y++)
-            {
-                if (groundPlan[index.X, index.Y] == Foliage.Tree)
-                    numOfTrees++;
-                index.shift(3, 1);
-            }
-            return numOfTrees.ToString();
+            return treesForSlopes(new[] { (3, 1) }, groundPlan)[0].ToString();
         }
 
         public string SecondStar(string[] inputLines)
         {
-            throw new NotImplementedException();
+            var groundPlan = parseGroundPlan(inputLines);
+            return treesForSlopes(new[] { (1, 1), (3, 1), (5, 1), (7, 1), (1, 2) }, groundPlan).Select(a => (Int64)a).Aggregate((Int64 a, Int64 b) => a * b).ToString();
         }
     }
 }
