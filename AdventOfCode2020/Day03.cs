@@ -77,7 +77,7 @@
         public string SecondStar(string[] inputLines)
         {
             var groundPlan = parseGroundPlan(inputLines);
-            return treesForSlopes(new[] { (1, 1), (3, 1), (5, 1), (7, 1), (1, 2) }, groundPlan).Select(a => (Int64)a).Aggregate((Int64 a, Int64 b) => a * b).ToString();
+            return treesForSlopes(new[] { (1, 1), (3, 1), (5, 1), (7, 1), (1, 2) }, groundPlan).Select(a => (Int64)a).Aggregate((a, b) => a * b).ToString();
         }
     }
 }
