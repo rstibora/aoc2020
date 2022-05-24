@@ -51,18 +51,18 @@
             return groundPlan;
         }
 
-        int[] treesForSlopes((int, int)[] slopes, Foliage[,] groundPlan)
+        int[] treesForSlopes((int x, int y)[] slopes, Foliage[,] groundPlan)
         {
             var treeCounts = new int[slopes.Length];
             for (int i = 0; i < slopes.Length; i++)
             {
                 WrapAround2DIndex index = new WrapAround2DIndex(groundPlan.GetLength(0), groundPlan.GetLength(1));
 
-                for (int y = 0; y < groundPlan.GetLength(1); y += slopes[i].Item2)
+                for (int y = 0; y < groundPlan.GetLength(1); y += slopes[i].y)
                 {
                     if (groundPlan[index.X, index.Y] == Foliage.Tree)
                         treeCounts[i]++;
-                    index.shift(slopes[i].Item1, slopes[i].Item2);
+                    index.shift(slopes[i].x, slopes[i].y;
                 }
             }
             return treeCounts;
