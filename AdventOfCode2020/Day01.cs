@@ -14,7 +14,7 @@
             return FindNumbersWithSum(inputNumbers, 2020, 3).ToString();
         }
 
-        private int FindNumbersWithSum(int[] numbers, int desiredSum, uint numberOfSumElements)
+        private static int FindNumbersWithSum(int[] numbers, int desiredSum, uint numberOfSumElements)
         {
             var indices = new uint[numberOfSumElements];
             for (uint i = 0; i < indices.Length; i++)

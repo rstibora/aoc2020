@@ -17,7 +17,7 @@ namespace AdventOfCode2020
                 (string passportString) => passportString.Contains("pid:"),
 
             };
-            return countValidPassports(passportStrings, validityTests).ToString();
+            return CountValidPassports(passportStrings, validityTests).ToString();
         }
 
         public string SecondStar(string[] inputLines)
@@ -49,11 +49,12 @@ namespace AdventOfCode2020
                 ruleWrapper("ecl:", dataFragment => (new []{"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}).Contains(dataFragment)),
                 ruleWrapper("pid:", dataFragment => new Regex(@"[0-9]{9,9}").Matches(dataFragment).Count == 1),
             };
-            return countValidPassports(passportStrings, validityTests).ToString();
+            return CountValidPassports(passportStrings, validityTests).ToString();
         }
 
-        private int countValidPassports(string[] passportStrings, Func<string, bool>[] validityTests)
+        private static int CountValidPassports(string[] passportStrings, Func<string, bool>[] validityTests)
         {
+            // TODO: remove the debug print once the second star solution is correct.
             foreach (string strr in (passportStrings.Where(passportString => validityTests.All(test => test(passportString)))))
             {
                 System.Console.WriteLine(strr);

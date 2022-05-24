@@ -10,8 +10,8 @@
 
         class WrapAround2DIndex
         {
-            private int width;
-            private int height;
+            private readonly int width;
+            private readonly int height;
             public int X { get; private set; }
             public int Y { get; private set; }
 
@@ -21,7 +21,7 @@
                 this.height = height;
             }
 
-            public void shift(int x, int y)
+            public void Shift(int x, int y)
             {
                 X += x;
                 if (X >= width)
@@ -37,7 +37,7 @@
             }
         }
 
-        Foliage[,] parseGroundPlan(string[] inputLines)
+        static Foliage[,] ParseGroundPlan(string[] inputLines)
         {
             Foliage[,] groundPlan = new Foliage[inputLines[0].Length, inputLines.Length];
             for (int x = 0; x < groundPlan.GetLength(0); x++)
@@ -51,18 +51,18 @@
             return groundPlan;
         }
 
-        int[] treesForSlopes((int x, int y)[] slopes, Foliage[,] groundPlan)
+        static int[] TreesForSlopes((int x, int y)[] slopes, Foliage[,] groundPlan)
         {
             var treeCounts = new int[slopes.Length];
             for (int i = 0; i < slopes.Length; i++)
             {
-                WrapAround2DIndex index = new WrapAround2DIndex(groundPlan.GetLength(0), groundPlan.GetLength(1));
+                WrapAround2DIndex index = new(groundPlan.GetLength(0), groundPlan.GetLength(1));
 
                 for (int y = 0; y < groundPlan.GetLength(1); y += slopes[i].y)
                 {
                     if (groundPlan[index.X, index.Y] == Foliage.Tree)
                         treeCounts[i]++;
-                    index.shift(slopes[i].x, slopes[i].y;
+                    index.Shift(slopes[i].x, slopes[i].y);
                 }
             }
             return treeCounts;
@@ -70,14 +70,14 @@
 
         public string FirstStar(string[] inputLines)
         {
-            var groundPlan = parseGroundPlan(inputLines);
-            return treesForSlopes(new[] { (3, 1) }, groundPlan)[0].ToString();
+            var groundPlan = ParseGroundPlan(inputLines);
+            return TreesForSlopes(new[] { (3, 1) }, groundPlan)[0].ToString();
         }
 
         public string SecondStar(string[] inputLines)
         {
-            var groundPlan = parseGroundPlan(inputLines);
-            return treesForSlopes(new[] { (1, 1), (3, 1), (5, 1), (7, 1), (1, 2) }, groundPlan).Select(a => (Int64)a).Aggregate((a, b) => a * b).ToString();
+            var groundPlan = ParseGroundPlan(inputLines);
+            return TreesForSlopes(new[] { (1, 1), (3, 1), (5, 1), (7, 1), (1, 2) }, groundPlan).Select(a => (Int64)a).Aggregate((a, b) => a * b).ToString();
         }
     }
 }
