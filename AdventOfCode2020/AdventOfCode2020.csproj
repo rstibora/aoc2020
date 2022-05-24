@@ -7,6 +7,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CS8600;CS8602;CS8603</WarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CS8600;CS8602;CS8603</WarningsAsErrors>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Update="InputDay01.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
