@@ -46,7 +46,7 @@ namespace AdventOfCode2020
                     };
                 }),
                 ruleWrapper("hcl:", dataFragment => new Regex(@"#[0-9a-f]{6,6}").Matches(dataFragment).Count == 1),
-                ruleWrapper("ecl:", dataFragment => (new []{"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}).Contains(dataFragment)),
+                ruleWrapper("ecl:", dataFragment => dataFragment is "amb" or "blu" or "brn" or "gry" or "grn" or "hzl" or "oth"),
                 ruleWrapper("pid:", dataFragment => new Regex(@"[0-9]{9,9}").Matches(dataFragment).Count == 1),
             };
             return CountValidPassports(passportStrings, validityTests).ToString();
