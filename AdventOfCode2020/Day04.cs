@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace AdventOfCode2020
 {
@@ -34,14 +35,22 @@ namespace AdventOfCode2020
 
             var passportStrings = string.Join("\n", inputLines).Split("\n\n");
             var validityTests = new[] {
-                ruleWrapper("byr:", dataFragment => dataFragment.Length == 4 && Int32.Parse(dataFragment) >= 1920 && Int32.Parse(dataFragment) <= 2002),
-                ruleWrapper("iyr:", dataFragment => dataFragment.Length == 4 && Int32.Parse(dataFragment) >= 2010 && Int32.Parse(dataFragment) <= 2020),
-                ruleWrapper("eyr:", dataFragment => dataFragment.Length == 4 && Int32.Parse(dataFragment) >= 2020 && Int32.Parse(dataFragment) <= 2030),
+                ruleWrapper("byr:", dataFragment => dataFragment.Length == 4
+                                                    && Int32.Parse(dataFragment, CultureInfo.InvariantCulture) >= 1920
+                                                    && Int32.Parse(dataFragment, CultureInfo.InvariantCulture) <= 2002),
+                ruleWrapper("iyr:", dataFragment => dataFragment.Length == 4
+                                                    && Int32.Parse(dataFragment, CultureInfo.InvariantCulture) >= 2010
+                                                    && Int32.Parse(dataFragment, CultureInfo.InvariantCulture) <= 2020),
+                ruleWrapper("eyr:", dataFragment => dataFragment.Length == 4
+                                                    && Int32.Parse(dataFragment, CultureInfo.InvariantCulture) >= 2020
+                                                    && Int32.Parse(dataFragment, CultureInfo.InvariantCulture) <= 2030),
                 ruleWrapper("hgt:", dataFragment =>
                 {
                     return dataFragment[^2..] switch {
-                        "cm" => Int32.Parse(dataFragment[..^2]) >= 150 && Int32.Parse(dataFragment[..^2]) <= 193,
-                        "in" => Int32.Parse(dataFragment[..^2]) >= 59 && Int32.Parse(dataFragment[..^2]) <= 76,
+                        "cm" => Int32.Parse(dataFragment[..^2], CultureInfo.InvariantCulture) >= 150
+                                && Int32.Parse(dataFragment[..^2], CultureInfo.InvariantCulture) <= 193,
+                        "in" => Int32.Parse(dataFragment[..^2], CultureInfo.InvariantCulture) >= 59
+                                && Int32.Parse(dataFragment[..^2], CultureInfo.InvariantCulture) <= 76,
                         _ => false
                     };
                 }),

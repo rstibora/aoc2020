@@ -1,5 +1,7 @@
 ﻿namespace AdventOfCode2020;
 
+using System.Globalization;
+
 public abstract class PasswordPolicy
 {
     protected readonly char character;
@@ -13,7 +15,9 @@ public abstract class PasswordPolicy
         this.numberB = numberB;
     }
 
-    public PasswordPolicy(string policy) : this(policy.Split(' ')[1][0], UInt32.Parse(policy.Split(' ')[0].Split('-')[0]), UInt32.Parse(policy.Split(' ')[0].Split('-')[1])) { }
+    public PasswordPolicy(string policy) : this(policy.Split(' ')[1][0],
+                                                UInt32.Parse(policy.Split(' ')[0].Split('-')[0], CultureInfo.InvariantCulture),
+                                                UInt32.Parse(policy.Split(' ')[0].Split('-')[1], CultureInfo.InvariantCulture)) { }
 
     public abstract bool CheckPassword(string password);
 }
