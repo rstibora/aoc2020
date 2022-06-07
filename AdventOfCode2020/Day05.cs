@@ -24,6 +24,10 @@ internal class Day05 : IDay
 
     public string SecondStar(string[] inputLines)
     {
-        throw new NotImplementedException();
+        var allSeatIds = inputLines.Select(boardingPassId).ToHashSet();
+        for (var seatId = 0; seatId < allSeatIds.Max(); seatId++)
+            if (!allSeatIds.Contains(seatId) && allSeatIds.Contains(seatId - 1) && allSeatIds.Contains(seatId + 1))
+                return seatId.ToString();
+        throw new Exception("No such seat.");
     }
 }
