@@ -38,7 +38,31 @@ namespace AdventOfCode2020
 
         public string SecondStar(string[] inputLines)
         {
-            throw new NotImplementedException();
+            var rules = ParseRules(inputLines);
+            return CountInnerBags("shiny gold", rules).ToString();
+        }
+
+        private int CountInnerBags(string bagName, Dictionary<string, List<(string, int)>> rules)
+        {
+            if (!rules.ContainsKey(bagName) || rules[bagName].Count == 0)
+            {
+                return 0;
+            }
+
+            var sum = 0;
+            foreach (var rule in rules[bagName])
+            {
+                var innerBags = CountInnerBags(rule.Item1, rules);
+                if (innerBags == 0)
+                {
+                    sum += rule.Item2;
+                }
+                else
+                {
+                    sum += rule.Item2 + rule.Item2 * innerBags;
+                }
+            }
+            return sum;
         }
 
         private static Dictionary<string, List<(string, int)>> ParseRules(string[] inputLines)
