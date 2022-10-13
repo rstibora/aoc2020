@@ -1,8 +1,8 @@
 ﻿using AdventOfCode2020;
 
-string[] inputLines = System.IO.File.ReadAllLines($"{AppDomain.CurrentDomain.BaseDirectory}/InputDay06.txt");
+string[] inputLines = System.IO.File.ReadAllLines($"{AppDomain.CurrentDomain.BaseDirectory}/InputDay07.txt");
 
-var day = new Day06();
+var day = new Day07();
 
 var firstStarSolution = "not implemented";
 var secondStarSolution = "not implemented";
