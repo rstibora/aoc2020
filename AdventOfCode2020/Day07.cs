@@ -12,8 +12,7 @@ namespace AdventOfCode2020
         {
             var rules = ParseRules(inputLines);
             var canContainShinyGolden = new HashSet<string>();
-            var discoveredNew = true;
-
+            bool discoveredNew;
             do
             {
                 discoveredNew = false;
