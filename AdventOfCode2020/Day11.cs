@@ -48,7 +48,34 @@ namespace AdventOfCode2020
 
         public string SecondStar(string[] inputLines)
         {
-            throw new NotImplementedException();
+            var seatingMap = ParseSeatingMap(inputLines);
+            var seatingMapData = seatingMap.Data;
+            bool change;
+            do
+            {
+                change = false;
+                var freshSeatingMapData = new Dictionary<(int, int), char>(seatingMapData);
+                foreach (var kvp in freshSeatingMapData)
+                {
+                    var occupation = kvp.Value;
+                    var seat = kvp.Key;
+
+                    var adjancedOccupation = PositionsInSight(seat, seatingMap).Select(position => seatingMapData[position]);
+                    if (occupation == 'L' && adjancedOccupation.All(o => o == '.' || o == 'L'))
+                    {
+                        freshSeatingMapData[seat] = '#';
+                        change = true;
+                    }
+                    else if (occupation == '#' && adjancedOccupation.Where(o => o == '#').Count() >= 5)
+                    {
+                        freshSeatingMapData[seat] = 'L';
+                        change = true;
+                    }
+                }
+                seatingMapData = freshSeatingMapData;
+            } while (change);
+
+            return seatingMapData.Where(kvp => kvp.Value == '#').Count().ToString();
         }
 
         private SeatingMap ParseSeatingMap(string[] inputLines)
@@ -79,6 +106,32 @@ namespace AdventOfCode2020
                 }
             }
             positions.Remove(position);
+            return positions;
+        }
+
+        private HashSet<(int, int)> PositionsInSight((int, int) position, SeatingMap seatingMap)
+        {
+            var positions = new HashSet<(int, int)>();
+            for (int y = -1; y < 2; y++)
+            {
+                for (int x = -1; x < 2; x++)
+                {
+                    if (x == 0 && y == 0) continue;
+
+                    int distance = 1;
+                    var testedPosition = (position.Item1 + x * distance, position.Item2 + y * distance);
+                    while (seatingMap.Data.ContainsKey(testedPosition) && seatingMap.Data[testedPosition] == '.')
+                    {
+                        distance++;
+                        testedPosition = (position.Item1 + x * distance, position.Item2 + y * distance);
+                    }
+
+                    if (seatingMap.Data.ContainsKey(testedPosition) && seatingMap.Data[testedPosition] != '.')
+                    {
+                        positions.Add(testedPosition);
+                    }
+                }
+            }
             return positions;
         }
     }
